@@ -52,4 +52,44 @@ As observed in these images, the algorithm converges after around 5 iterations f
 
 ![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/54c45a68-7789-4f92-88ff-0d3a17d3cc2b)
 
+![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/e4da22f9-0d58-4608-bb86-8b70c9190ace)
 
+![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/2dbc9ca1-298b-4614-8abf-3fb4a1bc89f0)
+
+![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/21c498ce-03c6-48f4-ae7d-3f15643d3de0)
+
+***Part 2:*** Intelligent k-Means Clustering
+
+In this section, following the instructions provided in the exercise, we aim to perform clustering in a way that satisfies the given conditions. Now we want to explain the algorithm that leads to meeting these conditions and implement it.
+
+**Section A:** Algorithm Design and Implementation
+
+The algorithm discussed in this section will be similar to the k-means algorithm overall, with the difference that we stop at the end of each iteration and check each condition. 
+
+Initially, based on the desired number of conditions, we randomly select conditions from the given set. During the stopping and condition-checking phase, we examine one condition at a time. We know that conditions have two states. If two given indices are in the same cluster, the state is 1, and if they are not in the same cluster, the state is -1. Therefore, we examine each state separately and ensure that the conditions are satisfied for clustering in the end. 
+
+**State 1:** In this state, we check whether the two given indices are in the same cluster or not. If they are not in the same cluster, we cluster them together as follows:
+
+If we name the cluster related to index 1 (ind1) as cluster1 and the cluster related to index 2 (ind2) as cluster2, there are two ways to cluster the two indices. One way is to assign ind2 to cluster1, and the other way is to assign ind1 to cluster2. To determine which way is better, we calculate the cost function, which is the sum of distances to the centroids, for each case and choose the one with lower cost. This way, the two indices are clustered together.
+
+cost1 = dist(ind1, cluster1) + dist(ind2, cluster1)
+cost2 = dist(ind1, cluster2) + dist(ind2, cluster2)
+
+**State 2:** In this state, we check whether the two given indices are in different clusters or not. If they are in the same cluster, we differentiate their clusters as follows:
+
+First, we try to find the second nearest cluster center to each index. If we name the cluster of the two indices as cluster0, the second nearest cluster of index 1 (ind1) as cluster1, and the second nearest cluster of index 2 (ind2) as cluster2, there are two ways to assign the two indices to different clusters. One way is to assign ind2 to cluster2, and the other way is to assign ind1 to cluster1. To determine which way is better, we calculate the cost function, which is the sum of distances to the centroids, for each case and choose the one with lower cost. This way, the two indices are clustered in different clusters.
+
+cost1 = dist(ind1, cluster0) + dist(ind2, cluster2)
+cost2 = dist(ind1, cluster1) + dist(ind2, cluster0)
+
+We execute this algorithm for all conditions. The "Constraints_Check()" function is written to check and satisfy the conditions.
+
+**Section B:** Algorithm Evaluation
+
+***Problem 1:*** In this section, for k values of {3, 5, 10, 20} and size_cons values of {20, 40, 60}, we compare clustering. To do this, we consider the evaluation criterion as the average of the Ratio and Cost functions for 10 iterations and plot the corresponding graphs for each case. The image below illustrates the graphs of the average Ratio and Cost functions against k for different numbers of conditions.
+
+![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/811d9951-203b-4b75-a1b3-dd45dba0dca2)
+
+***Problem 2:*** Now, for k=3, we want to compare the accuracy of clustering for the simple and intelligent clustering algorithms with the required number of conditions. Given that we have Labels for the data, where the first, second, and third sets of 50 data points each belong to one cluster, we obtain the clustering accuracy. (Note that the cluster numbers do not necessarily match the Label data, so we calculate the maximum repetition within each set of 50 data points and calculate the overall accuracy. As expected, as shown in the accompanying figure, the accuracy of intelligent clustering is higher compared to simple clustering, and as we increase the number of conditions, this accuracy also increases.
+
+![image](https://github.com/ErfanPanahi/Clustering/assets/107314081/fd4cc665-de0a-4e0c-9093-18b5c4a066d1)
